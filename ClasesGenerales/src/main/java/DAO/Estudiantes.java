@@ -36,7 +36,7 @@ public  class Estudiantes {
             while (resultado.next()) {
                 //Llamar a el objeto de entidades.
                 Estudiante es = new Estudiante();
-              
+                es.setIdEstudiante(resultado.getInt("idEstudiante"));
                 es.setNombre(resultado.getString("Nombre"));
                 es.setApellido(resultado.getString("Apellido"));
                 listado.add(es);
@@ -49,6 +49,24 @@ public  class Estudiantes {
         return listado;
 
     }
+    
+    
+    public void AddEstudiante(Estudiante es){
+    
+        try {
+            CallableStatement cb = conexion.prepareCall("{call SP_I_ESTUDIANTE(?,?,?)}");
+            cb.setString("PNombre", es.getNombre());
+            cb.setString("PApellido", es.getApellido());
+            cb.setDate("pfecha", new java.sql.Date( es.getFechadeNcimiento().getTime()));
+            cb.execute();
+            
+            JOptionPane.showMessageDialog(null, "Persona agregada","Mensje sistems",1);
+        } catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error","Mensje sistems",1);
+            
+        }}
+    
+    
     
    
     

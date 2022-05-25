@@ -57,6 +57,9 @@ public class FrmConsultaBD extends javax.swing.JFrame {
         cbEstu = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtNota = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         TbInscritos = new javax.swing.JTable();
@@ -183,6 +186,10 @@ public class FrmConsultaBD extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Estudiantes");
+
+        jLabel5.setText("Materias");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -190,19 +197,29 @@ public class FrmConsultaBD extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbEstu, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton4)
+                        .addComponent(cbEstu, 0, 347, Short.MAX_VALUE)
+                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNota)))
                 .addContainerGap(95, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(46, 46, 46)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbEstu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(94, 94, 94)
+                .addGap(72, 72, 72)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                .addGap(63, 63, 63)
+                .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addGap(41, 41, 41))
         );
@@ -259,7 +276,15 @@ public class FrmConsultaBD extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+        Estudiante e = new Estudiante();
+        Estudiantes esDao = new Estudiantes();
+        
+        e.setNombre(txtNombre.getText());
+        e.setApellido(txtApellido.getText());
+        e.setFechadeNcimiento(jDateChooser1.getDate());
+        esDao.AddEstudiante(e);
+        cargar();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -277,10 +302,12 @@ public class FrmConsultaBD extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
       
         // TODO add your handling code here:
+        int id =Valuemeber[cbEstu.getSelectedIndex()];
+        JOptionPane.showMessageDialog(null, id);
     }//GEN-LAST:event_jButton4ActionPerformed
 
      
-     int id[];
+     int Valuemeber[];
     public void cargar() {
         String titulos[] = {"NOMBRE", "NACIMIENTO", "NOMBRE MATERIA"};
         DefaultTableModel df = new DefaultTableModel(null, titulos);
@@ -321,14 +348,15 @@ public class FrmConsultaBD extends javax.swing.JFrame {
             DefaultComboBoxModel.removeAllElements();
             cbEstu.removeAll();
             String filas[] = new String[3];
-             id= new int[Estudiante.size()];
+            
+             Valuemeber= new int[Estudiante.size()];
            
             int intContador = 0;
             
             while (iterator.hasNext()) {
                 Estudiante estudianteCls;
                 estudianteCls = (Estudiante) iterator.next();
-                id[intContador] = estudianteCls.getIdEstudiante();
+                Valuemeber[intContador] = estudianteCls.getIdEstudiante();
                  
                 DefaultComboBoxModel.addElement(estudianteCls.getNombre());
                 intContador++;
@@ -384,6 +412,8 @@ public class FrmConsultaBD extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -394,5 +424,6 @@ public class FrmConsultaBD extends javax.swing.JFrame {
     private javax.swing.JTable tbEstu;
     private javax.swing.JTextField txtApellido;
     public static javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNota;
     // End of variables declaration//GEN-END:variables
 }
